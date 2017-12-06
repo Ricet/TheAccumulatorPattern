@@ -28,8 +28,8 @@ import rosegraphics as rg
 def main():
     """ Calls the   TEST   functions in this module. """
     # run_test_draw_squares_from_circle()
-    run_test_draw_circles_from_rectangle()
-    # run_test_draw_lines_from_rectangles()
+    # run_test_draw_circles_from_rectangle()
+    run_test_draw_lines_from_rectangles()
 
 
 def run_test_draw_squares_from_circle():
@@ -344,7 +344,7 @@ def draw_lines_from_rectangles(rectangle1, rectangle2, n, window):
       :type window: rg.RoseWindow
       """
     # ------------------------------------------------------------------
-    # TODO: 5. Implement and test this function.
+    # DONE: 5. Implement and test this function.
     #          Tests have been written for you (above).
     #
     # CONSIDER using the ACCUMULATOR IN GRAPHICS pattern,
@@ -357,7 +357,39 @@ def draw_lines_from_rectangles(rectangle1, rectangle2, n, window):
     #          ** FIRST DO A CONCRETE EXAMPLE BY HAND! **
     ####################################################################
     # ------------------------------------------------------------------
+    # rectangle1, rectangle2, n, window
 
+    rectangle1.attach_to(window)
+    rectangle2.attach_to(window)
+
+    line1 = rg.Line(rectangle1.get_center(), rectangle2.get_center())
+    line1.color = rectangle1.outline_color
+    line1.attach_to(window)
+    x_change = rectangle1.get_center().x - rectangle2.get_center().x
+    y_change = rectangle1.get_center().y - rectangle2.get_center().y
+
+    line2 = rg.Line(rectangle1.get_lower_left_corner(), rg.Point(
+        rectangle1.get_lower_left_corner().x - x_change,
+        rectangle1.get_lower_left_corner().y - y_change))
+    line2.color = rectangle2.outline_color
+    line2.attach_to(window)
+
+    x_shift = line1.get_midpoint().x - line2.get_midpoint().x
+    y_shift = line1.get_midpoint().y - line2.get_midpoint().y
+
+    x = line2.start.x - x_shift
+    y = line2.start.y - y_shift
+    for k in range(n - 2):
+        line = rg.Line(rg.Point(x, y), rg.Point(x - x_change, y - y_change))
+        if k % 2 == 0:
+            line.color = rectangle1.outline_color
+        else:
+            line.color = rectangle2.outline_color
+        line.attach_to(window)
+        x = line.start.x - x_shift
+        y = line.start.y - y_shift
+
+    window.render()
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
