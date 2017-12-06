@@ -10,7 +10,7 @@ before you can implement a solution to the problem in Python.
 
 Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
          their colleagues and Tiarnan Rice.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -27,8 +27,8 @@ import rosegraphics as rg
 # ----------------------------------------------------------------------
 def main():
     """ Calls the   TEST   functions in this module. """
-    run_test_draw_parallel_lines()
-    # run_test_draw_lines()
+    # run_test_draw_parallel_lines()
+    run_test_draw_lines()
 
 
 def run_test_draw_parallel_lines():
@@ -96,7 +96,7 @@ def draw_parallel_lines(n, point, length, window):
       :type window: rg.RoseWindow
     """
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #          Tests have been written for you (above).
     #
     # CONSIDER using the ACCUMULATOR IN GRAPHICS pattern,
@@ -109,20 +109,21 @@ def draw_parallel_lines(n, point, length, window):
     #          ** FIRST DO A CONCRETE EXAMPLE BY HAND! **
     ####################################################################
     # ------------------------------------------------------------------
+    line1 = rg.Line(point, rg.Point(point.x + length, point.y))
+    line1.attach_to(window)
 
-    turtle = rg.SimpleTurtle('classic')
-    turtle.pen = rg.Pen('red', 3)
-    turtle.speed = 5
-    turtle.go_to(point)
-    for k in range(n):
-        turtle.forward(length)
-        turtle.pen_up()
-        turtle.right(90)
-        turtle.forward(30)
-        turtle.right(90)
-        turtle.forward(length)
-        turtle.right(180)
-        turtle.pen_down()
+    x = point.x
+    y = point.y
+
+    for k in range(n - 1):
+        point1 = rg.Point(x, y + 30)
+        point2 = rg.Point(x + length, y + 30)
+
+        line = rg.Line(point1, point2)
+        line.attach_to(window)
+
+        y = y + 30
+
 
     window.render()
 
@@ -189,6 +190,19 @@ def draw_lines(n, point, window):
     #          ** FIRST DO A CONCRETE EXAMPLE BY HAND! **
     ####################################################################
     # ------------------------------------------------------------------
+
+    x = point.x
+    y = point.y
+
+    for k in range(n):
+        point2 = rg.Point(x + 100, (y - 100) + ((k + 0.5) * 200 / n))
+        line = rg.Line(point, point2)
+        line.attach_to(window)
+
+    window.render()
+
+
+
 
 
 # ----------------------------------------------------------------------
